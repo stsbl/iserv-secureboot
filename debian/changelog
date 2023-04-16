@@ -1,5 +1,5 @@
-stsbl-iserv-secureboot (23.04.16-1) UNRELEASED; urgency=medium
+stsbl-iserv-secureboot (23.04.16.1) stable; urgency=medium
 
   * Initial Release.
 
- -- Stadtteilschule Blankenese <repository@stsbl.de>  Sun, 16 Apr 2023 21:43:24 +0200
+ -- Felix Jacobi <Felix@jacobi-hamburg.net>  Sun, 16 Apr 2023 23:36:33 +0200
