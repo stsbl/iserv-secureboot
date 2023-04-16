@@ -5,8 +5,8 @@ Test "generate mok"
   [ -f "/var/lib/shim-signed/mok/MOK.priv" ] &&
       [ -f "/var/lib/shim-signed/mok/MOK.der" ]
   ---
-  openssl req -new -nodes -x509 -newkey rsa:2048 -keyout MOK.priv -outform DER \
-      -out MOK.der -days 36500 -subj "/CN=$(hostname) Secure Boot Module Signature key/"
+  openssl req -new -nodes -x509 -newkey rsa:2048 -keyout /var/lib/shim-signed/mok/MOK.priv -outform DER \
+      -out /var/lib/shim-signed/mok/MOK.der -days 36500 -subj "/CN=$(hostname) Secure Boot Module Signature key/"
 
 MkDir 0755 root:root /var/lib/iserv/secureboot
 Touch /var/lib/iserv/secureboot/otp.pwd
