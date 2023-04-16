@@ -1,0 +1,29 @@
+MkDir 0755 root:root /var/lib/shim-signed
+MkDir 0755 root:root /var/lib/shim-signed/mok
+
+Test "generate mok"
+  [ -f "/var/lib/shim-signed/mok/MOK.priv" ] &&
+      [ -f "/var/lib/shim-signed/mok/MOK.der" ]
+  ---
+  openssl req -new -nodes -x509 -newkey rsa:2048 -keyout MOK.priv -outform DER \
+      -out MOK.der -days 36500 -subj "/CN=$(hostname) Secure Boot Module Signature key/"
+
+MkDir 0755 root:root /var/lib/iserv/secureboot
+Touch /var/lib/iserv/secureboot/otp.pwd
+ChPerm 0600 root:root /var/lib/iserv/secureboot/otp.pwd
+
+Test "generate enroll otp"
+  [ -s "/var/lib/iserv/secureboot/otp.pwd" ]
+  ---
+  pwgen 8 1 > /var/lib/iserv/secureboot/otp.pwd
+
+Test "trigger enrollment"
+  FINGERPRINT="$(openssl x509 -noout -fingerprint -sha1 -inform der -in /var/lib/shim-signed/mok/MOK.der | awk -F= '{ print $2 }')"
+  mokutil --list-enrolled | grep -qi "^SHA1 Fingerprint: $FINGERPRINT"
+  ---
+  set -e
+  OTP="$(< /var/lib/iserv/secureboot/otp.pwd)"
+  printf "$OTP\n$OTP\n" | mokutil --import /var/lib/shim-signed/mok/MOK.der
+  echo "Enrolling of MOK has been triggered. You will be prompted for the "\
+      "one-time password upon next boot. The one-time password is $OTP." >&2
+

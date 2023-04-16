@@ -1,0 +1,6 @@
+debian/stsbl-iserv-secureboot/*
+debian/stsbl-iserv-secureboot.substvars
+debian/stsbl-iserv-secureboot.debhelper.log
+debian/files
+debian/debhelper-build-stamp
+debian/*.debhelper

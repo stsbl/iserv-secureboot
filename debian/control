@@ -1,0 +1,29 @@
+Source: stsbl-iserv-secureboot
+Section: misc
+Priority: optional
+Maintainer: Stadtteilschule Blankenese <repository@stsbl.de>
+Build-Depends: debhelper-compat (= 13),
+  debhelper-sequence-iserv,
+  debhelper-sequence-stsbl,
+Standards-Version: 4.5.1
+Rules-Requires-Root: no
+
+Package: stsbl-iserv-secureboot
+Architecture: all
+Depends: ${misc:Depends},
+  ${perl:Depends},
+  dkms,
+  grub-efi-amd64-signed,
+  iserv-update,
+  mokutil,
+  openssl,
+  pwgen,
+  shim-signed,
+Description: Secure-Boot-Unterstützung für IServ
+ Stellt sicher, dass das System kompatibel zu UEFI Secure Boot ist.
+ .
+ Es wird automatisch die signierte Variante von GRUB installiert sowie der
+ Bootloader Shim eingerichtet.
+ .
+ Weiterhin ein MOK (Machine Owner Key) automatisch erzeugt und ausgerollt.
+Tag: suite::iserv

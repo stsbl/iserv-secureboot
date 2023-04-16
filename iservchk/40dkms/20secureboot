@@ -1,0 +1,5 @@
+Check /etc/dkms/framework.conf.d/mok.conf
+Check /etc/dkms/sign_helper.sh
+
+ChPerm 0755 root:root /etc/dkms/sign_helper.sh
+
