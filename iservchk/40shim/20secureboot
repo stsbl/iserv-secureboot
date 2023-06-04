@@ -18,9 +18,9 @@ Test "generate mok enrollment otp"
   pwgen 8 1 > /var/lib/iserv/secureboot/otp.pwd
 
 Test "trigger mok enrollment"
-  [ -f "/run/stsbl-iserv-secureboot.mok.enroll-requsted" ] && exit 0 
   FINGERPRINT="$(openssl x509 -noout -fingerprint -sha1 -inform der -in /var/lib/shim-signed/mok/MOK.der | awk -F= '{ print $2 }')"
-  mokutil --list-enrolled | grep -qi "^SHA1 Fingerprint: $FINGERPRINT"
+  mokutil --list-enrolled | grep -qi "^SHA1 Fingerprint: $FINGERPRINT" && exit 0
+  mokutil --list-new | grep -qi "^SHA1 Fingerprint: $FINGERPRINT" && exit 0
   ---
   set -e
   OTP="$(< /var/lib/iserv/secureboot/otp.pwd)"
